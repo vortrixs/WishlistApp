@@ -3,12 +3,14 @@ using System.Collections.Generic;
 
 namespace WishlistApp
 {
-    class WishList
+    class Program
     {
-        private static readonly List<Wish> Wishlist = new List<Wish>();
+        private static List<Wish> Wishlist { get; set; }
 
         static void Main()
         {
+            Wishlist = new List<Wish>();
+
             Console.WriteLine("Input wishes as \"Item you wish for\", \"priority\" (1 being most wanted):");
 
             StoreWish(Console.ReadLine());
@@ -21,7 +23,7 @@ namespace WishlistApp
 
             foreach (Wish item in Wishlist)
             {
-                Console.WriteLine($"Wish: {item.Name}. Priority: {item.Priority}");
+                Console.WriteLine($"Wish: {item.Name} | Priority: {item.Priority}");
             }
         }
         
@@ -34,22 +36,33 @@ namespace WishlistApp
 
             if (true == input.Contains(','))
             {
-                AddWish(input);
+                AddWishToWishlist(input);
             }
             else
             {
-                Console.WriteLine("Try again");
-            }            
+                Console.WriteLine("Comma separator not found. Try again.");
+            }
 
             StoreWish(Console.ReadLine());
         }
 
-        private static void AddWish(string input)
+        private static void AddWishToWishlist(string input)
         {
             string[] wishSplit = input.Split(",");
 
             string wishName = wishSplit[0];
-            int wishPriority = int.Parse(wishSplit[1].Trim());
+
+            int wishPriority;
+
+            try
+            {
+                wishPriority = int.Parse(wishSplit[1].Trim());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Priority needs to be a whole number. Try again.");
+                return;
+            }
 
             Wishlist.Add(
                 new Wish(wishName, wishPriority)
