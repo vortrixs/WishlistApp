@@ -2,8 +2,21 @@
 {
     class Wish
     {
-        public string Name { get; set; }
-        public int Priority { get; set; }
+        public readonly string Name;
+
+        private int priority;
+
+        public int Priority {
+            get { return priority; } 
+            private set {
+                if (0 == value)
+                {
+                    value = 1;
+                }
+
+                priority = value;
+            } 
+        }
 
         public Wish(string name, int priority)
         {
