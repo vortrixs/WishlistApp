@@ -9,25 +9,25 @@ namespace WishlistApp
 
         static void Main()
         {
-            Wishlist = new List<Wish>();
+            InitializeProgram();
 
-            Console.WriteLine("Input wishes as \"Item you wish for\", \"priority\" (1 being most wanted):");
-
-            StoreWish(Console.ReadLine());
+            ProcessWishes(Console.ReadLine());
 
             Wishlist.Sort(
                 (Wish wish1, Wish wish2) => wish1.Priority.CompareTo(wish2.Priority)
             );
 
-            Console.WriteLine("\nPrinting Wishlist:");
+            PrintWishlist();
+        }
 
-            foreach (Wish item in Wishlist)
-            {
-                Console.WriteLine($"Wish: {item.Name} | Priority: {item.Priority}");
-            }
+        private static void InitializeProgram()
+        {
+            Wishlist = new List<Wish>();
+
+            Console.WriteLine("Input wishes as \"Item you wish for\", \"priority\" (1 being most wanted):");
         }
         
-        private static void StoreWish(string input)
+        private static void ProcessWishes(string input)
         {
             if (true == input.ToLower().Equals("#stop"))
             {
@@ -43,12 +43,12 @@ namespace WishlistApp
                 Console.WriteLine("Comma separator not found. Try again.");
             }
 
-            StoreWish(Console.ReadLine());
+            ProcessWishes(Console.ReadLine());
         }
 
         private static void AddWishToWishlist(string input)
         {
-            string[] wishSplit = input.Split(",");
+            string[] wishSplit = input.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
             string wishName = wishSplit[0];
 
@@ -67,6 +67,16 @@ namespace WishlistApp
             Wishlist.Add(
                 new Wish(wishName, wishPriority)
             );
+        }
+
+        private static void PrintWishlist()
+        {
+            Console.WriteLine("\nPrinting Wishlist:");
+
+            foreach (Wish item in Wishlist)
+            {
+                Console.WriteLine($"Wish: {item.Name} | Priority: {item.Priority}");
+            }
         }
     }
 }
