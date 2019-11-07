@@ -29,7 +29,7 @@ namespace WishlistApp
         
         private static void StoreWish(string input)
         {
-            if (true == input.Equals("#STOP"))
+            if (true == input.ToLower().Equals("#stop"))
             {
                 return;
             }
