@@ -8,14 +8,7 @@
 
         public int Priority {
             get { return priority; } 
-            private set {
-                if (0 >= value)
-                {
-                    value = 1;
-                }
-
-                priority = value;
-            }
+            private set { priority = 0 >= value ? 1 : value; }
         }
 
         public Wish(string name, int priority)
