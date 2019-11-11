@@ -9,13 +9,13 @@
         public int Priority {
             get { return priority; } 
             private set {
-                if (0 == value)
+                if (0 >= value)
                 {
                     value = 1;
                 }
 
                 priority = value;
-            } 
+            }
         }
 
         public Wish(string name, int priority)
